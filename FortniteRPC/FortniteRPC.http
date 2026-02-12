@@ -1,0 +1,6 @@
+@FortniteRPC_HostAddress = http://localhost:5224
+
+GET {{FortniteRPC_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
