@@ -84,6 +84,8 @@ Potion Test	Health increase	Pass
 Damage Test	Health reduction	Pass
 Death Test	Health below zero	Pass
 Health Limit	Overflow detection	Fail
+Test Results Snapshot
+<p align="center"> <img src="https://github.com/Ajay-2002-24/Epic-RPC-Automation-CSharp/raw/main/C%23%20RPC%20Testcase.jpg" width="800"/> </p>
 
 The failing test exposes a gameplay edge case — showcasing real validation capability.
 
