@@ -1,77 +1,101 @@
 # Epic RPC Automation Simulation (C#)
 
-A service-driven automation framework that simulates how C# test systems interact with backend gameplay services using RPC-style communication.
+This project demonstrates how gameplay automation can be performed without directly interacting with engine code.
 
-Instead of directly calling logic, automation communicates through a wrapper layer — enabling realistic gameplay validation.
+Instead of calling game logic internally, C# automation tests communicate with gameplay systems through a wrapper-based RPC layer — similar to how enterprise game pipelines isolate automation from core engine code.
 
-Features
+# Objective
 
-# RPC-style automation architecture
+Simulate an Epic-style automation approach where:
 
-Wrapper-based service communication
+C# test frameworks validate gameplay behavior
 
-Backend gameplay logic simulation
+Engine logic remains untouched
 
-xUnit test integration
+Communication happens through service-level RPC calls
 
-Code coverage reporting (Coverlet + ReportGenerator)
+This enables safe, scalable automation without coupling tests to engine implementation.
 
-Edge-case bug detection via failing test
+# Automation Architecture
 
-# Architecture
-xUnit Tests
-   ↓
+Automation does not directly invoke gameplay logic.
+
+Instead, the flow is:
+
+C# xUnit Tests
+      ↓
 RPC Wrapper (GameRpcClient)
-   ↓
+      ↓
 HTTP RPC Call
-   ↓
-FortniteRPC API
-   ↓
-Game Logic
-   ↓
+      ↓
+Backend Gameplay Service (FortniteRPC API)
+      ↓
+Game Logic Execution
+      ↓
 Response DTO
-   ↓
-Assertions
+      ↓
+Test Assertions
 
-# Input
-Example request:
+# Step 1 — Test Layer
+
+Automation initiates gameplay action:
+
+UsePotion(50, 20)
+
+# Step 2 — Wrapper Layer
+
+Wrapper converts test intent into RPC request.
+
+# Step 3 — RPC Communication
+
+Request sent to gameplay service:
 
 {
   "startingHealth": 50,
   "amount": 20
 }
 
+# Step 4 — Gameplay Logic
 
-Simulates gameplay actions such as potion usage or damage.
+Backend simulates:
 
-# Output
-Example response:
+Health increase
+
+Damage handling
+
+Death validation
+
+# Step 5 — Response
+
+System returns:
 
 {
   "success": true,
   "newHealth": 70
 }
 
+# Step 6 — Assertion
 
-# Validated through automated tests.
+Automation validates behavior — without touching engine code.
 
-Test Coverage
+# Test Coverage
 Test Case	Scenario	Result
 Potion Test	Health increase	Pass
 Damage Test	Health reduction	Pass
 Death Test	Health below zero	Pass
 Health Limit	Overflow detection	Fail
 
-# The failing test highlights a gameplay edge case.
+The failing test exposes a gameplay edge case — showcasing real validation capability.
 
-Code Coverage Generated using: Coverlet
+# Code Coverage
 
-ReportGenerator Run:
+Generated using: Coverlet , ReportGenerator
+Run:
 dotnet test --collect:"XPlat Code Coverage"
-HTML report available in: coveragereport/index.html
+Coverage report available in: coveragereport/index.html
 
 
-# Tech Stack
+ # Tech Stack
 
 ASP.NET Core Web API
 xUnit
@@ -79,5 +103,20 @@ FluentAssertions
 Coverlet
 ReportGenerator
 
-# Purpose
-Demonstrates how automation frameworks validate gameplay behavior through RPC-style communication instead of direct logic invocation.
+# Why This Matters
+
+In large-scale game environments:
+
+Automation should not modify or depend on engine internals
+
+Tests must interact through stable service interfaces
+
+This project simulates that model using:
+
+✔ Wrapper-driven interaction
+✔ RPC-based communication
+✔ Engine isolation
+
+# Outcome
+
+Gameplay behavior is validated through service communication, enabling decoupled and scalable automation.
