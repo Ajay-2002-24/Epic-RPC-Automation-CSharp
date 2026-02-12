@@ -64,35 +64,20 @@ Health Limit	Overflow detection	Fail
 
 # The failing test highlights a gameplay edge case.
 
-Code Coverage
+Code Coverage Generated using: Coverlet
 
-Generated using:
-
-Coverlet
-
-ReportGenerator
-
-Run:
-
+ReportGenerator Run:
 dotnet test --collect:"XPlat Code Coverage"
+HTML report available in: coveragereport/index.html
 
 
-HTML report available in:
-
-coveragereport/index.html
-
-Tech Stack
+# Tech Stack
 
 ASP.NET Core Web API
-
 xUnit
-
 FluentAssertions
-
 Coverlet
-
 ReportGenerator
 
-Purpose
-
+# Purpose
 Demonstrates how automation frameworks validate gameplay behavior through RPC-style communication instead of direct logic invocation.
