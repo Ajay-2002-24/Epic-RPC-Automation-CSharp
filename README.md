@@ -1,29 +1,46 @@
-🚀 Epic RPC Automation Simulation (C#)
+Epic RPC Automation Simulation (C#)
 
-This project simulates an Epic-style RPC automation architecture where a C# test framework communicates with a game backend through a wrapper layer instead of directly invoking game logic.
+A service-driven automation framework that simulates how modern game automation systems interact with backend gameplay services using RPC-style communication.
 
-Instead of tightly coupling automation with engine internals, tests interact through RPC-style service calls — similar to modern game automation pipelines.
+This project demonstrates how a C# automation layer validates gameplay logic by communicating through a wrapper instead of directly invoking backend logic.
 
-🎯 Project Goal
+It includes:
 
-To replicate how large-scale game studios validate gameplay systems using:
+ASP.NET Core RPC-style API
 
-Service-based communication
+xUnit automation tests
 
-Wrapper-driven automation
+Wrapper-based communication
 
-Backend gameplay logic validation
+Integrated code coverage reporting
 
-This ensures automation mimics real player-driven interactions instead of directly calling engine code.
+Features
 
-🧱 Architecture Overview
+RPC-style automation architecture
+
+Wrapper-driven service communication
+
+Backend gameplay logic simulation
+
+xUnit test integration
+
+Code coverage reports (Coverlet + ReportGenerator)
+
+Real bug detection through failing test scenario
+
+Architecture Overview
+
+Automation does not directly call logic.
+
+Instead, communication happens through an RPC layer.
+
 xUnit Test Layer
         ↓
 RPC Wrapper (GameRpcClient)
         ↓
-HTTP RPC Request
+HTTP RPC Call
         ↓
-FortniteRPC API (Backend Simulation)
+FortniteRPC API
         ↓
 Game Logic Execution
         ↓
@@ -31,56 +48,10 @@ Response DTO
         ↓
 Test Assertions
 
-🔄 End-to-End Flow
-1️⃣ Test Scenario Starts
+How It Works
+Input
 
-Example:
-
-Potion_Should_Increase_Health()
-
-2️⃣ Wrapper Sends RPC Call
-
-Test uses:
-
-_rpc.UsePotion(50, 20);
-
-
-Instead of directly calling logic.
-
-3️⃣ RPC Request Sent
-
-API receives:
-
-{
-  "startingHealth": 50,
-  "amount": 20
-}
-
-4️⃣ Backend Executes Logic
-
-Game rules applied:
-
-Health increase
-
-Damage handling
-
-Death detection
-
-5️⃣ Response Returned
-{
-  "success": true,
-  "newHealth": 70
-}
-
-6️⃣ Test Validates Behavior
-result.NewHealth.Should().Be(70);
-
-
-Automation confirms gameplay correctness.
-
-📥 Input
-
-Example RPC request:
+Automation sends gameplay action request:
 
 {
   "startingHealth": 50,
@@ -90,73 +61,86 @@ Example RPC request:
 
 Simulates:
 
-✔ Player uses potion
-✔ Player takes damage
+Player using potion
 
-🎮 Processing
+Player taking damage
 
-Backend applies gameplay rules:
+Processing
+
+Backend API processes gameplay rules:
 
 Health increase
 
-Damage reduction
+Damage handling
 
-Death validation
+Death detection
 
-📤 Output
+Output
 
-Example RPC response:
+System returns updated state:
 
 {
   "success": true,
   "newHealth": 70
 }
 
-🧪 Test Suite
+
+Automation validates this behavior through assertions.
+
+Test Coverage
 Test Case	Scenario	Result
-Potion Test	Health increase	✅ Pass
-Damage Test	Health reduction	✅ Pass
-Death Test	Below zero health	✅ Pass
-Health Limit	Bug detection	❌ Fail
+Potion Test	Health increase	Pass
+Damage Test	Health reduction	Pass
+Death Test	Health below zero	Pass
+Health Limit	Detect overflow bug	Fail
 
-The failing test intentionally exposes a gameplay rule violation (health exceeding limits).
+The failing test intentionally highlights an edge case violation in gameplay logic.
 
-📊 Code Coverage
+Code Coverage
 
-Code coverage was generated using:
+Integrated using:
 
 Coverlet
 
 ReportGenerator
 
-Coverage validates:
+Run:
 
-✔ RPC endpoints
-✔ Gameplay logic
-✔ Success & failure paths
+dotnet test --collect:"XPlat Code Coverage"
 
-HTML coverage report is included in:
+
+Generate HTML report:
+
+reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:Html
+
+
+Open:
 
 coveragereport/index.html
 
+Project Structure
+FortniteRPC1        → Backend RPC API
+XUnitTestProject1   → Automation Layer
+RpcClient           → Wrapper Communication
+coveragereport      → Code Coverage Output
 
-This ensures automation validates backend behavior effectively.
+Getting Started
+1. Clone Repository
+git clone <repo-url>
 
-🔥 Highlights
+2. Install Dependencies
+dotnet restore
 
-RPC-style automation flow
+3. Run API
+dotnet run --project FortniteRPC1
 
-Wrapper-based architecture
+4. Run Tests
+dotnet test
 
-Integration-level validation
+5. Run Tests with Coverage
+dotnet test --collect:"XPlat Code Coverage"
 
-Real gameplay logic testing
-
-Bug detection via failing test
-
-Code coverage enabled
-
-🛠 Tech Stack
+Tech Stack
 
 ASP.NET Core Web API
 
@@ -167,3 +151,19 @@ FluentAssertions
 Coverlet
 
 ReportGenerator
+
+Purpose
+
+This project demonstrates a service-based automation pattern where gameplay behavior is validated through RPC communication instead of direct logic invocation.
+
+This approach improves:
+
+Test reliability
+
+System decoupling
+
+Real-world scenario validation
+
+Outcome
+
+The system successfully validates gameplay rules through RPC communication and highlights behavioral edge cases via automated testing and coverage reporting.
